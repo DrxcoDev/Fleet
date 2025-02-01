@@ -15,8 +15,10 @@
 package cli
 
 import (
-	"LattePkg/handlers"
-	"LattePkg/handlers/list"
+	"fleet/ai"
+	"fleet/handlers"
+	"fleet/handlers/list"
+	"fmt"
 
 	"github.com/spf13/cobra"
 )
@@ -24,7 +26,7 @@ import (
 func Command() *cobra.Command {
 	var rootCmd = &cobra.Command{
 		Use:   "Fleet",
-		Short: "A package manager modern",
+		Short: "A modern package manager",
 	}
 
 	rootCmd.AddCommand(
@@ -46,7 +48,7 @@ func Command() *cobra.Command {
 		},
 		&cobra.Command{
 			Use:   "list",
-			Short: "list all available packages",
+			Short: "List all available packages",
 			Run: func(cmd *cobra.Command, args []string) {
 				list.List()
 			},
@@ -59,11 +61,12 @@ func Command() *cobra.Command {
 			},
 		},
 		&cobra.Command{
-			Use:   "update [package]",
-			Short: "Update a package",
+			Use:   "ai [question]",
+			Short: "AI assistant",
 			Args:  cobra.ExactArgs(1),
 			Run: func(cmd *cobra.Command, args []string) {
-				// handlers.Update(args[0])
+				result := ai.ResponseAi(args[0])
+				fmt.Println(result)
 			},
 		},
 	)
